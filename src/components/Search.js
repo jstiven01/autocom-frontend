@@ -1,5 +1,12 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
+import Spinner from 'react-bootstrap/Spinner';
+import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import Card from 'react-bootstrap/Card';
+import ListGroup from 'react-bootstrap/ListGroup';
+
+
  
 function Search() {
   const [data, setData] = useState([]);
@@ -34,12 +41,13 @@ function Search() {
  
   return (
     <Fragment>
+      <InputGroup className="mb-3 d-flex justify-content-center">
       <input
         type="text"
         value={query}
         onChange={event => setQuery(event.target.value)}
       />
-        <select value={param} onChange={event => setParam(event.target.value)}>
+        <select size="lg" value={param} onChange={event => setParam(event.target.value)}>
             <option value="">Select Option</option>
             <option value="model_name">Model Name</option>
             <option value="brand_name">Brand Name</option>
@@ -47,30 +55,45 @@ function Search() {
             <option value="mileage">Mileage lower than</option>
             <option value="price">Price lower than</option>
           </select>
-      <button
+      <Button
+        variant="primary"
         type="button"
         onClick={() =>
           setUrl(`http://localhost:3001/api/v1/vehicles/search?${param}=${query}`)
         }
       >
         Search
-      </button>
+      </Button>
+      </InputGroup>
  
       {isError && <div>Something went wrong ...</div>}
  
       {isLoading ? (
-        <div>Loading ...</div>
+        <div>
+          <Spinner animation="border" role="status"></Spinner>
+        </div>
       ) : (
-        <ul>
+        <Card>
+         <ListGroup variant="flush">
           {data.map(item => (
-            <li key={item.id}>
-              <p>{item.model_name} {item.brand_name} {item.year} {item.mileage} {item.price}</p>
-            </li>
+            <ListGroup.Item key={item.id}>
+              <div><strong>Model: </strong>{item.model_name}</div>
+              
+              <span><strong>Brand: </strong>{item.brand_name}  </span>
+              <span><strong>Year: </strong>{item.year}  </span>
+              <span><strong>Mileage: </strong>{item.mileage} mi  </span>
+              <span><strong>Price: </strong>{currencyFormat(item.price)} </span>
+            </ListGroup.Item>
           ))}
-        </ul>
+        </ListGroup>
+        </Card>
       )}
     </Fragment>
   );
+}
+
+function currencyFormat(num) {
+  return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
 }
  
 export default Search;
