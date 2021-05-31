@@ -13,7 +13,7 @@ function Search() {
   const [query, setQuery] = useState('');
   const [param, setParam] = useState('');
   const [url, setUrl] = useState(
-    'http://localhost:3001/api/v1/vehicles/search',
+    `${process.env.REACT_APP_BACKEND_URL}/v1/vehicles/search`,
   );
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
@@ -24,9 +24,7 @@ function Search() {
       setIsLoading(true);
  
       try {
-          console.log(url, query, param)
         const result = await axios(url);
-        console.log(result.data)
  
         setData(result.data);
       } catch (error) {
@@ -59,7 +57,7 @@ function Search() {
         variant="primary"
         type="button"
         onClick={() =>
-          setUrl(`http://localhost:3001/api/v1/vehicles/search?${param}=${query}`)
+          setUrl(`${process.env.REACT_APP_BACKEND_URL}/v1/vehicles/search?${param}=${query}`)
         }
       >
         Search
