@@ -1,10 +1,23 @@
+## Installation and Usage
 
-## Available Scripts
+In this repository are the back-end and frontend which were created with the webpack=react flag that Rails offers
 
-In the project directory, you can run:
+1. Clone the project to your local directory
 
-### `yarn start`
+```
+ git clone https://github.com/jstiven01/autocom-backend.git
+```
 
-Runs the app in the development mode.\
-You SHOULD run first the Backend server
-The Backend server will take the localhost:3000 and this command will open the app in localhost:3001
+2. Get in to the folder app
+
+```
+cd autocom-frontend
+
+```
+
+3. You SHOULD run first the Backend server The Backend server will take the localhost:3000 and this command will open the app in localhost:3001
+```
+yarn start
+
+```
+
